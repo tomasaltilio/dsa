@@ -95,7 +95,34 @@ class LinkedList:
       for _ in range(index):
         current = current.next
 
-      return current.value
+      return current
+
+    def set_value(self, index, value):
+      current = self.get(index)
+
+      if current:
+        current.value = value
+        return True
+      return False
+
+    def insert(self, index, value):
+      if index < 0 or index >= self.length:
+        return False
+
+      if index == 0:
+        return self.prepend(value)
+
+      if index == self.length:
+        return self.append(value)
+
+      new_node = Node(value)
+      current = self.head
+      pre = self.head
+      for _ in range(index):
+        pre = current
+        current = current.next
+
+
 
 my_linked_list = LinkedList(4)
 
