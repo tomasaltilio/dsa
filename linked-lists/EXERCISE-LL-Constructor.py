@@ -4,13 +4,6 @@ class Node:
       self.value = value
       self.next = None
 
-
-                                  #
-                                  #
-                                  #
-                                  #
-    ################################
-
 class LinkedList:
     ## WRITE LL CONSTRUCTOR HERE ##
     def __init__(self, value):
@@ -106,25 +99,61 @@ class LinkedList:
       return False
 
     def insert(self, index, value):
-      if index < 0 or index >= self.length:
+      if index < 0 or index > self.length:
         return False
-
       if index == 0:
         return self.prepend(value)
-
       if index == self.length:
         return self.append(value)
 
       new_node = Node(value)
-      current = self.head
-      pre = self.head
-      for _ in range(index):
-        pre = current
-        current = current.next
+      current = self.get(index-1)
 
+      new_node.next = current.next
+      current.next = new_node
+
+      self.length += 1
+      return True
+
+    def remove(self, index):
+      if index < 0 or index >= self.length:
+        return None
+      if index == 0:
+        return self.pop_first()
+      if index == self.length -1:
+        return self.pop()
+
+      prev = self.get(index-1)
+      current = prev.next
+      prev.next = current.next
+      current.next = None
+
+      self.length -= 1
+
+      return current
+
+    def reverse(self):
+      tmp = self.head
+      self.head = self.tail
+      self.tail = tmp
+      after = tmp.next
+      before = None
+
+      for _ in range(self.length):
+        after = tmp.next
+        tmp.next = before
+        before = tmp
+        tmp = after
 
 
 my_linked_list = LinkedList(4)
 
 my_linked_list.append(5)
 my_linked_list.append(6)
+my_linked_list.append(7)
+my_linked_list.append(8)
+my_linked_list.print_list()
+my_linked_list.reverse()
+my_linked_list.print_list()
+
+
